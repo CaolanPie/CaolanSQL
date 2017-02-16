@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 /*
- * Change Log.
+ * Change Logeeeeee
  * 27-Dec-13 Tony     created GetAllRows to get all the rows from our DB
  * 28-Aug-13 Tony     Created the first hard coded list of items
  */
