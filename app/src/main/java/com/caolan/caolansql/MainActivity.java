@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
  */
 
 /*
-    The below line used to be in our project
+    The below line used to be in our project...
      public class MainActivity extends ListActivity {
  */
 public class MainActivity extends AppCompatActivity {
