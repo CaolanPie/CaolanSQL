@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 /* This is the original code
@@ -43,12 +44,19 @@ public class MainActivity extends AppCompatActivity {
  * @return NONE
  */
 
-public class MainActivity extends ListActivity {
+/*
+    The below line used to be
+     public class MainActivity extends ListActivity {
+ */
+public class MainActivity extends AppCompatActivity {
     private static final int ACTIVITY_CREATE=0;
     private static final int ACTIVITY_EDIT=1;
     private DetailsDbFunctions mDbHelper;
+    private ListView MyListView;
+
 
     private void createDetails() {
+        Log.i("MainActivity"," :: createDetails");
         Intent i = new Intent(this, EditScreenActivity.class);
         startActivityForResult(i, ACTIVITY_CREATE);
     }
@@ -57,6 +65,11 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("MainActivity"," :: onCreate");
+        setContentView(R.layout.activity_main);
+        MyListView = (ListView)findViewById(R.id.myList);
+//  This next line will set opacity which we are currently not using
+//        MyListView.setAlpha(50);
         String[] texts = new String[] { "First Line", "Second Line", "Third Line", "Fourth Line", "Fifth Line",
                 "Sixth Line", "Seventh Line", "Eigth Line", "Nineth Line"};
         mDbHelper = new DetailsDbFunctions(this);
@@ -67,13 +80,14 @@ public class MainActivity extends ListActivity {
 			new ArrayAdapter<String>(this, R.layout.details_row, R.id.text1, texts);
 		setListAdapter(adapter);
 		*/
-        setContentView(R.layout.activity_main);
-        registerForContextMenu(getListView());
+//        setContentView(R.layout.activity_main);
+        // registerForContextMenu(MyListView);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        Log.i("MainActivity"," :: onCreateOptionsMenu");
         getMenuInflater().inflate(R.menu.main, menu);
 
         return true;
@@ -83,12 +97,13 @@ public class MainActivity extends ListActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo
             menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
+        Log.i("MainActivity"," :: onCreateContextMenu");
         MenuInflater mi = getMenuInflater();
         mi.inflate(R.menu.oktodelete_longpress, menu);
     }
 
     @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.menu_insert:
                 createDetails();
@@ -101,7 +116,7 @@ public class MainActivity extends ListActivity {
 
                 return true;
         }
-        return super.onMenuItemSelected(featureId, item);
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -114,6 +129,7 @@ public class MainActivity extends ListActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        Log.i("MainActivity"," :: onCContextItemSelected");
         switch(item.getItemId()) {
             case R.id.oktodelete:
                 // Figure out which row on the screen is selected
@@ -129,6 +145,8 @@ public class MainActivity extends ListActivity {
     }
 
     private void GetAllRows() {
+        Log.i("MainActivity"," :: onGetAllRows");
+
         Cursor DetailsCursor = mDbHelper.fetchAllDetails();
         startManagingCursor(DetailsCursor);
         // Cursor c = mDbHelper.rawQuery("select * from your_table_name",null);
@@ -141,6 +159,7 @@ public class MainActivity extends ListActivity {
         SimpleCursorAdapter details =
                 new SimpleCursorAdapter(this, R.layout.detail_row,
                         DetailsCursor, from, to);
-        setListAdapter(details);
+        MyListView.setAdapter(details);
+
     }
 }

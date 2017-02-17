@@ -1,9 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:targetApi="11"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
+    android:orientation="vertical"
+    android:id="@+id/background1" >
+    <!--  Taking out the background picture for now
     android:background="@drawable/clipboard_with_pencil"
-    >
+    -->
 
     <TextView
         android:id="@+id/idName"
@@ -43,7 +47,7 @@
     <DatePicker
         android:id="@+id/datePicker1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="215dp" />
 
     <TextView
         android:id="@+id/textView4"

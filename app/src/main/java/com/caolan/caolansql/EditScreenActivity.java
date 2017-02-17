@@ -38,6 +38,8 @@ public class EditScreenActivity extends Activity  {
 // it sets the context of the phone to this screen where by bringing it to the front
 // and bringing focus on it
 		setContentView(R.layout.editscreen);
+// The next line can be used to set opacity, but we aren't using at the moment
+//		findViewById(R.id.background1).setAlpha( (float) 0.5);
 		mDbHelper = new DetailsDbFunctions(this);
 		mDbHelper.open();
 		
