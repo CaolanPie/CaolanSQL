@@ -1,11 +1,15 @@
 package com.caolan.caolansql;
 
 import android.app.Activity;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.Date;
 
 /*
  * Change Log
@@ -19,11 +23,13 @@ public class EditScreenActivity extends Activity  {
 	private Button mCancelButton;
 	private EditText mNameBox;
 	private EditText mAddressBox;
-	private EditText mDateBox;
-	private EditText mNumberBox;
+// The below line used to read "private EditText mDateBox;"
+	private DatePicker mDateBox;
+    private EditText mNumberBox;
 	private static final int DATE_PICKER_DIALOG = 0;
 	private DetailsDbFunctions mDbHelper;
-	
+	SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 	
 	
 	
@@ -51,7 +57,7 @@ public class EditScreenActivity extends Activity  {
 		mCancelButton = (Button) findViewById(R.id.ButtonCancel);
 		mNameBox = (EditText) findViewById (R.id.idNameBox);
 		mAddressBox = (EditText) findViewById (R.id.idAddressBox);
-		mDateBox = (EditText) findViewById (R.id.idDateBox);
+		mDateBox = (DatePicker) findViewById (R.id.datePicker1);
 		mNumberBox = (EditText) findViewById (R.id.idNumberBox);
 		
 //-- Caolan what does the next line do?
@@ -65,6 +71,7 @@ public class EditScreenActivity extends Activity  {
 	private void registerButtonsListenersAndSetDefaultText() {
 		// TODO Auto-generated method stub
 
+
 //-- Caolan what does the next line do?
 //		this is to detect when the save button specifically is pressed
 		// this sets up a trigger which will tell us when the button is press and when it is it calls our onClick
@@ -72,11 +79,14 @@ public class EditScreenActivity extends Activity  {
 			new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					String myDateString = myDateFormat.format(new Date(mDateBox.getYear(),
+																mDateBox.getMonth(),
+																mDateBox.getDayOfMonth()));
 		// this is called when our button is actually pressed
 					Toast.makeText(EditScreenActivity.this,
 						"Clicked Save button Name = "+mNameBox.getText().toString() +
 						" Address="+mAddressBox.getText().toString() +
-						" Date="+mDateBox.getText().toString() +
+						" Date="+myDateString +
 						" Telephone Number="+mNumberBox.getText().toString(),
 						Toast.LENGTH_SHORT).show();
 
@@ -85,7 +95,7 @@ public class EditScreenActivity extends Activity  {
 					mDbHelper.createDetailRow(
 							mNameBox.getText().toString(),
 							mAddressBox.getText().toString(),
-							mDateBox.getText().toString(),
+							myDateString,
 							mNumberBox.getText().toString());
 					Toast.makeText(EditScreenActivity.this,
 							"Details saved.",

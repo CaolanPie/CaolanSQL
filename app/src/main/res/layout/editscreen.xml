@@ -4,10 +4,23 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:id="@+id/background1" >
+    android:id="@+id/background1"
+    android:weightSum="1">
     <!--  Taking out the background picture for now
     android:background="@drawable/clipboard_with_pencil"
     -->
+
+    <Button
+        android:id="@+id/ButtonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Save" />
+
+    <Button
+        android:id="@+id/ButtonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Cancel" />
 
     <TextView
         android:id="@+id/idName"
@@ -47,7 +60,8 @@
     <DatePicker
         android:id="@+id/datePicker1"
         android:layout_width="wrap_content"
-        android:layout_height="215dp" />
+        android:layout_height="115dp"
+        android:layout_weight="0.28" />
 
     <TextView
         android:id="@+id/textView4"
@@ -61,17 +75,5 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number" />
-
-    <Button
-        android:id="@+id/ButtonSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Save" />
-
-    <Button
-        android:id="@+id/ButtonCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Cancel" />
 
 </LinearLayout>
