@@ -15,27 +15,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-/* This is the original code
-
-
-public class MainActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
-}
-
-*/
-
 
 /*
- * Change Logeeeeee
+ * Change Log
+ * 22-Feb-17 Tony     long press now works for delete
  * 27-Dec-13 Tony     created GetAllRows to get all the rows from our DB
  * 28-Aug-13 Tony     Created the first hard coded list of items
  */
-
 
 /**
  * Main entry point for our App
@@ -56,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void createDetails() {
-        Log.i("MainActivity"," :: createDetails");
+        Log.i(">> MainActivity"," :: createDetails");
         Intent i = new Intent(this, EditScreenActivity.class);
         startActivityForResult(i, ACTIVITY_CREATE);
     }
@@ -65,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("MainActivity"," :: onCreate");
+        Log.i(">> MainActivity"," :: onCreate");
         setContentView(R.layout.activity_main);
         MyListView = (ListView)findViewById(R.id.myList);
 //  This next line will set opacity which we are currently not using
@@ -80,14 +66,14 @@ public class MainActivity extends AppCompatActivity {
 			new ArrayAdapter<String>(this, R.layout.details_row, R.id.text1, texts);
 		setListAdapter(adapter);
 		*/
-//        setContentView(R.layout.activity_main);
-        // registerForContextMenu(MyListView);
+        // Register a context menu so we can delete a row.
+         registerForContextMenu(MyListView);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        Log.i("MainActivity"," :: onCreateOptionsMenu");
+        Log.i(">> MainActivity"," :: onCreateOptionsMenu");
         getMenuInflater().inflate(R.menu.main, menu);
 
         return true;
@@ -97,23 +83,28 @@ public class MainActivity extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo
             menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        Log.i("MainActivity"," :: onCreateContextMenu");
+        Log.i(">> MainActivity"," :: onCreateContextMenu");
         MenuInflater mi = getMenuInflater();
         mi.inflate(R.menu.oktodelete_longpress, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i(">> MainActivity"," :: onOptionsItemSelected");
         switch(item.getItemId()) {
             case R.id.menu_insert:
+                Log.i(">> MainActivity"," :: option Insert Selected");
                 createDetails();
                 return true;
             case R.id.menu_settings:
+                Log.i(">> MainActivity"," :: option Insert Selected");
+                Log.i(">>>>>> not Implemented", "  yet");
                 //	Intent i = new Intent(this, TaskPreferences.class);
                 //	startActivity(i);
                 return true;
             case R.id.menu_delete:
-
+                Log.i(">> MainActivity"," :: option Insert Selected");
+                Log.i(">>>>>> not Implemented", "  yet");
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -129,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        Log.i("MainActivity"," :: onCContextItemSelected");
+        Log.i(">> MainActivity"," :: onCContextItemSelected");
         switch(item.getItemId()) {
             case R.id.oktodelete:
                 // Figure out which row on the screen is selected
@@ -145,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void GetAllRows() {
-        Log.i("MainActivity"," :: onGetAllRows");
+        Log.i(">> MainActivity"," :: onGetAllRows");
 
         Cursor DetailsCursor = mDbHelper.fetchAllDetails();
         startManagingCursor(DetailsCursor);
